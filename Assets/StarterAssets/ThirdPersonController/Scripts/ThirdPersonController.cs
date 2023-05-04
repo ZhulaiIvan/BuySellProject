@@ -168,7 +168,7 @@ namespace StarterAssets.ThirdPersonController.Scripts
 
         private void Move()
         {
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = MoveSpeed;
 
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
