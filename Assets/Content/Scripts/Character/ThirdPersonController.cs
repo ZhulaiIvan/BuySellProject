@@ -29,21 +29,6 @@ namespace Content.Scripts.Character
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
 
-        [Tooltip("How far in degrees can you move the camera up")]
-        public float TopClamp = 70.0f;
-
-        [Tooltip("How far in degrees can you move the camera down")]
-        public float BottomClamp = -30.0f;
-
-        [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
-        public float CameraAngleOverride = 0.0f;
-
-        [Tooltip("For locking the camera position on all axis")]
-        public bool LockCameraPosition = false;
-
-        private float _cinemachineTargetYaw;
-        private float _cinemachineTargetPitch;
-        
         private float _speed;
         private float _animationBlend;
         private float _targetRotation = 0.0f;
@@ -58,38 +43,23 @@ namespace Content.Scripts.Character
         private Animator _animator;
         private CharacterController _controller;
         private Input input;
-        private GameObject _mainCamera;
+        private Camera _mainCamera;
 
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
 
-        private bool IsCurrentDeviceMouse
-        {
-            get
-            {
-#if ENABLE_INPUT_SYSTEM
-                return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
-				return false;
-#endif
-            }
-        }
-
 
         private void Awake()
         {
-            // get a reference to our main camera
             if (_mainCamera == null)
             {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                _mainCamera = Camera.main;
             }
         }
 
         private void Start()
         {
-            _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             input = GetComponent<Input>();
@@ -107,31 +77,9 @@ namespace Content.Scripts.Character
             Move();
         }
 
-        private void LateUpdate()
-        {
-            CameraRotation();
-        }
-
         private void AssignAnimationIDs()
         {
             _animIDMove = Animator.StringToHash("Movement");
-        }
-
-        private void CameraRotation()
-        {
-            if (input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
-            {
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-
-                _cinemachineTargetYaw += input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += input.look.y * deltaTimeMultiplier;
-            }
-            
-            _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-            
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
-                _cinemachineTargetYaw, 0.0f);
         }
 
         private void Move()
@@ -159,7 +107,7 @@ namespace Content.Scripts.Character
             }
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (_animationBlend < 0.01f) _animationBlend = 0f;
+            if (_animationBlend < 0.001f) _animationBlend = 0f;
 
             Vector3 inputDirection = new Vector3(input.move.x, 0.0f, input.move.y).normalized;
 
@@ -175,15 +123,15 @@ namespace Content.Scripts.Character
 
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
+            
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+            transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
+
             if (_hasAnimator)
-            {
-                Debug.Log(_animationBlend);
-                _animator.SetBool(_animIDMove, _animationBlend > 0.1f);
-            }
+                _animator.SetFloat(_animIDMove, _animationBlend);
+
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

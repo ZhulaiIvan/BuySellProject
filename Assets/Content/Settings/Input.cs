@@ -44,7 +44,7 @@ namespace Content.Settings
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
+			SetCursorState(false);
 		}
 
 		private void SetCursorState(bool newState)
