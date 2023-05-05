@@ -9,7 +9,7 @@ namespace Content.Scripts.Character
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class Controller : MonoBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -24,10 +24,6 @@ namespace Content.Scripts.Character
 
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
-        
-        [Header("Cinemachine")]
-        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-        public GameObject CinemachineCameraTarget;
 
         private float _speed;
         private float _animationBlend;
@@ -44,8 +40,6 @@ namespace Content.Scripts.Character
         private CharacterController _controller;
         private Input input;
         private Camera _mainCamera;
-
-        private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
 
@@ -77,6 +71,11 @@ namespace Content.Scripts.Character
             Move();
         }
 
+        public bool TryInteract()
+        {
+            return _playerInput.actions["Interact"].triggered;
+        }
+
         private void AssignAnimationIDs()
         {
             _animIDMove = Animator.StringToHash("Movement");
@@ -86,12 +85,12 @@ namespace Content.Scripts.Character
         {
             float targetSpeed = MoveSpeed;
 
-            if (input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (input.Move == Vector2.zero) targetSpeed = 0.0f;
 
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
+            float inputMagnitude = input.AnalogMovement ? input.Move.magnitude : 1f;
 
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
                 currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -109,9 +108,9 @@ namespace Content.Scripts.Character
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.001f) _animationBlend = 0f;
 
-            Vector3 inputDirection = new Vector3(input.move.x, 0.0f, input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(input.Move.x, 0.0f, input.Move.y).normalized;
 
-            if (input.move != Vector2.zero)
+            if (input.Move != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
@@ -134,13 +133,6 @@ namespace Content.Scripts.Character
 
         }
 
-        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-        {
-            if (lfAngle < -360f) lfAngle += 360f;
-            if (lfAngle > 360f) lfAngle -= 360f;
-            return Mathf.Clamp(lfAngle, lfMin, lfMax);
-        }
-        
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)

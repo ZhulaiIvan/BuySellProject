@@ -9,6 +9,14 @@ namespace Content.Scripts.Data
         
         }
     }
+    
+    public class ObservableByte : ObservableField<byte>
+    {
+        public ObservableByte(byte value = 0) : base(value)
+        {
+        
+        }
+    }
 
     public abstract class ObservableField<T>
     {

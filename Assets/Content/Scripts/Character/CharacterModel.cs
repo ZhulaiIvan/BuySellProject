@@ -9,6 +9,9 @@ namespace Content.Scripts.Character
         private ObservableInt _money;
         private PlayerInventory _inventory;
 
+        public ObservableInt Money => _money;
+        public PlayerInventory Inventory => _inventory;
+
         public CharacterModel(PlayerInventory inventory)
         {
             _money = new (1000);

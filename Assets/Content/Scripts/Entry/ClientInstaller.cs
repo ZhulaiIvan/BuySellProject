@@ -1,5 +1,7 @@
 ﻿using Content.Scripts.Character;
 using Content.Scripts.Inventory;
+using Content.Scripts.States;
+using Content.Scripts.Trigger;
 using Zenject;
 
 namespace Content.Scripts.Entry
@@ -8,6 +10,10 @@ namespace Content.Scripts.Entry
     {
         public override void InstallBindings()
         {
+            Container
+                .Bind<AppStateContr>()
+                .FromInstance(new AppStateContr());
+            
             BindModels();
         }
 
