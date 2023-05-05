@@ -900,7 +900,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525189738}
-  m_LocalRotation: {x: 0.117611475, y: 0.013512488, z: -0.0016004808, w: 0.9929665}
+  m_LocalRotation: {x: 0.117611475, y: 0.013512497, z: -0.001600482, w: 0.9929665}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9067,7 +9067,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.86, z: 0}
+  m_Center: {x: 0, y: 0.92, z: 0}
 --- !u!114 &7310064604678314034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9081,22 +9081,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 2
-  SprintSpeed: 5.335
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
-  LandingAudioClip: {fileID: 0}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 0
-  Gravity: -15
-  JumpTimeout: 0
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 0
   CinemachineCameraTarget: {fileID: 475214588}
   TopClamp: 20
   BottomClamp: -30
@@ -9146,8 +9134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
-  jump: 0
-  sprint: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
