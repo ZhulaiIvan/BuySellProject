@@ -1,4 +1,5 @@
 ﻿using Content.Scripts.Character;
+using Content.Scripts.Inventory;
 using Zenject;
 
 namespace Content.Scripts.Entry
@@ -7,8 +8,14 @@ namespace Content.Scripts.Entry
     {
         public override void InstallBindings()
         {
+            BindModels();
+        }
+
+        private void BindModels()
+        {
             Container
-                .BindInterfacesAndSelfTo<CharacterData>()
+                .Bind<CharacterModel>()
+                .FromInstance(new CharacterModel(new PlayerInventory()))
                 .AsSingle();
         }
     }
