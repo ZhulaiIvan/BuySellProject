@@ -1,5 +1,6 @@
 ﻿using Content.Scripts.Inventory;
 using Content.Scripts.States;
+using Content.Scripts.UI.Screens;
 using UnityEngine;
 using Zenject;
 
@@ -7,16 +8,17 @@ namespace Content.Scripts.Trigger
 {
     public class MarketPlace : MonoBehaviour
     {
+        [SerializeField] private MarketPlaceScreen _screen;
+        
         private AppStateContr _state;
-        private MarketPlaceScreen _screen;
         private InventoryItem[] _items;
+        private bool _isMarketInit = false;
 
         [Inject]
-        public void Construct(AppStateContr state, MarketPlaceScreen screen)
+        public void Construct(AppStateContr state)
         {
             _state = state;
             _state.State.Changed += OnStateUpdated;
-            _screen = screen;
         }
 
         private void OnStateUpdated(byte state)
@@ -34,18 +36,19 @@ namespace Content.Scripts.Trigger
 
         private void CloseMarket()
         {
+            if (!_isMarketInit) return;
+            
             _state.State.Changed -= OnStateUpdated;
             _screen.OnScreenHide();
         }
 
         private void InitMarket()
         {
-            _screen.OnScreenShow();
+            _isMarketInit = true;
+            _screen.OnScreenShow(() =>
+            {
+                _screen.InitUI();
+            });
         }
-    }
-
-    public class MarketPlaceScreen : MenuScreen
-    {
-        
     }
 }

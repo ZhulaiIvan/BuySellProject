@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Content.Scripts.Trigger
+namespace Content.Scripts.UI
 {
-    public abstract class MenuScreen
+    public abstract class MenuScreen : MonoBehaviour
     {
-        [SerializeField] private GameObject _screen;
+        [SerializeField] protected GameObject _screen;
         
         public virtual void OnScreenShow(Action complete = null)
         {
