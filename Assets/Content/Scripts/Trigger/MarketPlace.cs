@@ -9,6 +9,7 @@ namespace Content.Scripts.Trigger
     public class MarketPlace : MonoBehaviour
     {
         [SerializeField] private MarketPlaceScreen _screen;
+        [SerializeField] private MarketType _type;
         
         private AppStateContr _state;
         private InventoryItem[] _items;
@@ -47,8 +48,15 @@ namespace Content.Scripts.Trigger
             _isMarketInit = true;
             _screen.OnScreenShow(() =>
             {
-                _screen.InitUI();
+                _screen.InitUI(_type);
             });
         }
+    }
+
+    public enum MarketType
+    {
+        None,
+        Buy,
+        Sell
     }
 }

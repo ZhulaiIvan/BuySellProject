@@ -5,20 +5,18 @@ namespace Content.Scripts.Inventory
 {
     public class PlayerInventory
     {
-        private List<InventoryItemConfig> _items = new();
+        private List<InventoryItem> _items = new();
 
-        public InventoryItemConfig[] Items => _items.ToArray();
-        
+        public InventoryItem[] Items => _items.ToArray();
         public event Action OnInventoryUpdated;
-
-        public void AddItem(InventoryItemConfig itemConfig)
+        public void AddItem(InventoryItem itemConfig)
         {
             _items.Add(itemConfig);
 
             OnInventoryUpdated?.Invoke();
         }
 
-        public void DeleteItem(InventoryItemConfig itemConfig)
+        public void DeleteItem(InventoryItem itemConfig)
         {
             if (!_items.Contains(itemConfig)) return;
             

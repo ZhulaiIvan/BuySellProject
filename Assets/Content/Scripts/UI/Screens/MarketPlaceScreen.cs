@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Scripts.Character;
 using Content.Scripts.Trigger;
 using Content.Scripts.Utils;
 using UnityEngine;
@@ -17,18 +18,57 @@ namespace Content.Scripts.UI.Screens
         [SerializeField] private MarketConfig _config;
 
         private List<ItemButton> _buttons = new ();
+        
+        private CharacterModel _characterModel;
 
-        public void InitUI()
+        [Inject]
+        public void Construct(CharacterModel model)
+        {
+            _characterModel = model;
+        }
+
+        public void InitUI(MarketType type)
+        {
+            InitItems(type);
+        }
+        
+        private void InitItems(MarketType type)
+        {
+            switch (type)
+            {
+                case MarketType.None:
+                    break;
+                case MarketType.Buy:
+                    InitFromMarketConfig();
+                    break;
+                case MarketType.Sell:
+                    InitFromCharacterModel();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void InitFromCharacterModel()
+        {
+            _characterModel.Inventory.Items.Each(item =>
+            {
+                ItemButton button = Instantiate(_buttonPrefab, _content);
+                button.Init(item);
+                button.OnClick(() => { Debug.Log("Button clicked"); });
+
+                _buttons.Add(button);
+            });
+        }
+
+        private void InitFromMarketConfig()
         {
             _config.Items.Each(item =>
             {
                 ItemButton button = Instantiate(_buttonPrefab, _content);
                 button.Init(item);
-                button.OnClick(() =>
-                {
-                    Debug.Log("Button clicked");
-                });
-                
+                button.OnClick(() => { Debug.Log("Button clicked"); });
+
                 _buttons.Add(button);
             });
         }
