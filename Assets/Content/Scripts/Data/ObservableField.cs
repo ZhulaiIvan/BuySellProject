@@ -47,11 +47,7 @@ namespace Content.Scripts.Data
                 _changed += value;
                 value?.Invoke(_value);
             }
-            remove
-            {
-                _changed -= value;
-                value?.Invoke(_value);
-            }
+            remove => _changed -= value;
         }
     }
 }

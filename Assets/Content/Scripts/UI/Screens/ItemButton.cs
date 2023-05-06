@@ -29,7 +29,7 @@ namespace Content.Scripts.UI.Screens
         public void Destroy()
         {
             _button.onClick.RemoveAllListeners();
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

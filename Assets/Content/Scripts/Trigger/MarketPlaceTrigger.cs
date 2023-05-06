@@ -9,8 +9,10 @@ namespace Content.Scripts.Trigger
     [RequireComponent(typeof(BoxCollider))]
     public class MarketPlaceTrigger : MonoBehaviour
     {
-        private MarketPlace _market;
+        [SerializeField] private MarketPlace _market;
+        
         private AppStateContr _stateContr;
+        private ClientCharacter _character;
 
         [Inject]
         public void Construct(AppStateContr stateContr)
@@ -20,23 +22,25 @@ namespace Content.Scripts.Trigger
 
         private void OnTriggerEnter(Collider other)
         {
-            TryInteract(other);
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            TryInteract(other);
-        }
-
-        private void TryInteract(Collider other)
-        {
             if (!other.gameObject.TryGetComponent(out ClientCharacter character))
                 return;
+            _character = character;
+        }
 
-            if (!character.Controller.TryInteract()) return;
+        private void Update()
+        {
+            TryInteract();
+        }
 
-            Debug.Log("Player tries interact");
-            _stateContr.ChangeState(AppStates.Market);
+        private void TryInteract()
+        {
+            if (_character == null) return;
+            if (!_character.Controller.TryInteract()) return;
+
+            Debug.Log("Player tries to interact");
+
+            _stateContr.State.Value = (byte)AppStates.Market;
+            _market.InitMarket();
         }
     }
 }
