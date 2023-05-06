@@ -40,10 +40,10 @@ namespace Content.Scripts.UI.Screens
 
         private void InitItems()
         {
-           UpdateFromMarketConfig();
+           UpdateFromCharacterModel();
         }
 
-        private void UpdateFromMarketConfig()
+        private void UpdateFromCharacterModel()
         {
             _characterModel.Inventory.Items.Each(item =>
             {
@@ -54,7 +54,7 @@ namespace Content.Scripts.UI.Screens
                     _characterModel.Money.Value += item.Config.Price;
                     _characterModel.Inventory.DeleteItem(item);
 
-                    Update();
+                    UpdateUI();
                 });
 
                 _buttons.Add(button);
@@ -67,15 +67,17 @@ namespace Content.Scripts.UI.Screens
             Clear();
         }
         
-        private void Update()
+        private void UpdateUI()
         {
             Clear();
+            UpdateFromCharacterModel();
         }
 
         private void Clear()
         {
             _buttons.Each(button => button.Destroy());
             _buttons.Clear();
+            _exitButton.onClick.RemoveAllListeners();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Content.Scripts.UI.Screens
                     
                     _characterModel.Money.Value -= item.Config.Price;
                     _characterModel.Inventory.AddItem(item);
-
+                    
                     UpdateUI();
                 });
 
@@ -73,6 +73,7 @@ namespace Content.Scripts.UI.Screens
         private void UpdateUI()
         {
             Clear();
+            UpdateFromMarketConfig();
         }
 
         private void Clear()
