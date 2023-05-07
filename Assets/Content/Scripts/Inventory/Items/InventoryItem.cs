@@ -2,10 +2,14 @@
 
 namespace Content.Scripts.Inventory
 {
-    public abstract class InventoryItem : MonoBehaviour
+    public class InventoryItem
     {
-        [SerializeField] private InventoryItemConfig _config;
-
+        protected InventoryItemConfig _config;
         public InventoryItemConfig Config => _config;
+
+        public InventoryItem(InventoryItemConfig config)
+        {
+            _config = config;
+        }
     }
 }

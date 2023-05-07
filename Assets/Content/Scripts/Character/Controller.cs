@@ -8,17 +8,15 @@ using Input = Content.Settings.Input;
 namespace Content.Scripts.Character
 {
     [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM 
+#if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
     public class Controller : MonoBehaviour
     {
-        [Header("Player")]
-        [Tooltip("Move speed of the character in m/s")]
+        [Header("Player")] [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
-        [Tooltip("How fast the character turns to face movement direction")]
-        [Range(0.0f, 0.3f)]
+        [Tooltip("How fast the character turns to face movement direction")] [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
 
         [Tooltip("Acceleration and deceleration")]
@@ -32,10 +30,10 @@ namespace Content.Scripts.Character
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
         private float _verticalVelocity;
-        
+
         private int _animIDMove;
-        
-#if ENABLE_INPUT_SYSTEM 
+
+#if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
         private Animator _animator;
@@ -66,7 +64,7 @@ namespace Content.Scripts.Character
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             input = GetComponent<Input>();
-#if ENABLE_INPUT_SYSTEM 
+#if ENABLE_INPUT_SYSTEM
             _playerInput = GetComponent<PlayerInput>();
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
@@ -77,9 +75,9 @@ namespace Content.Scripts.Character
 
         private void Update()
         {
-            if (_stateContr.State.Value != (byte)AppStates.Play)
+            if (_stateContr != null && _stateContr.State.Value != (byte)AppStates.Play)
                 return;
-            
+
             Move();
         }
 
@@ -134,7 +132,7 @@ namespace Content.Scripts.Character
 
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-            
+
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
@@ -142,7 +140,6 @@ namespace Content.Scripts.Character
 
             if (_hasAnimator)
                 _animator.SetFloat(_animIDMove, _animationBlend);
-
         }
 
         private void OnFootstep(AnimationEvent animationEvent)
@@ -152,7 +149,8 @@ namespace Content.Scripts.Character
                 if (FootstepAudioClips.Length > 0)
                 {
                     int index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center),
+                        FootstepAudioVolume);
                 }
             }
         }

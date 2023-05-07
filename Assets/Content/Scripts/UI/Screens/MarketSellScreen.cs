@@ -65,6 +65,7 @@ namespace Content.Scripts.UI.Screens
         {
             base.OnScreenHide(complete);
             Clear();
+            Unsubscribe();
         }
         
         private void UpdateUI()
@@ -77,6 +78,10 @@ namespace Content.Scripts.UI.Screens
         {
             _buttons.Each(button => button.Destroy());
             _buttons.Clear();
+        }
+
+        private void Unsubscribe()
+        {
             _exitButton.onClick.RemoveAllListeners();
         }
     }

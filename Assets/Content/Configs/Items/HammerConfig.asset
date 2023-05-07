@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ac93060d6d849518f03ea0c72cbf83c, type: 3}
-  m_Name: SwordConfig
+  m_Name: HammerConfig
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 144aa74618b85974a9a50f612c2fa8fd, type: 3}
-  _title: BIg knife
-  _price: 2000
+  _sprite: {fileID: 21300000, guid: 32fb7e0aee1614fe8ac38467a139e9a6, type: 3}
+  _title: Big hammer
+  _price: 150

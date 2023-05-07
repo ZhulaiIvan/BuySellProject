@@ -2,6 +2,8 @@
 {
     public class Wood : InventoryItem
     {
-        
+        public Wood(InventoryItemConfig config) : base(config)
+        {
+        }
     }
 }

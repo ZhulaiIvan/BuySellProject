@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Scripts.Character;
 using Content.Scripts.States;
 using UnityEngine;
@@ -25,6 +26,14 @@ namespace Content.Scripts.Trigger
             if (!other.gameObject.TryGetComponent(out ClientCharacter character))
                 return;
             _character = character;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.gameObject.TryGetComponent(out ClientCharacter character))
+                return;
+
+            _character = null;
         }
 
         private void Update()

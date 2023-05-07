@@ -2,6 +2,8 @@
 {
     public class Hammer : InventoryItem
     {
-        
+        public Hammer(InventoryItemConfig config) : base(config)
+        {
+        }
     }
 }

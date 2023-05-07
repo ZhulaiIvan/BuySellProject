@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Scripts.Character;
+using Content.Scripts.Inventory;
 using Content.Scripts.States;
 using Content.Scripts.Utils;
 using UnityEngine;
@@ -49,13 +50,15 @@ namespace Content.Scripts.UI.Screens
             _config.Items.Each(item =>
             {
                 ItemButton button = Instantiate(_buttonPrefab, _content);
-                button.Init(item);
+                InventoryItem inventoryItem = new InventoryItem(item);
+                button.Init(inventoryItem);
+                
                 button.OnClick(() =>
                 {
-                    if (_characterModel.Money.Value < item.Config.Price) return;
+                    if (_characterModel.Money.Value < inventoryItem.Config.Price) return;
                     
-                    _characterModel.Money.Value -= item.Config.Price;
-                    _characterModel.Inventory.AddItem(item);
+                    _characterModel.Money.Value -= inventoryItem.Config.Price;
+                    _characterModel.Inventory.AddItem(inventoryItem);
                     
                     UpdateUI();
                 });

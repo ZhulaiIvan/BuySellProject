@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MarketConfig
   m_EditorClassIdentifier: 
   _items:
-  - {fileID: 6122238851040218494, guid: 3562aafc9e98f1446b049bf9732f6dc0, type: 3}
-  - {fileID: 3842351127690878497, guid: 91a0f3d8bec588248a5b714895949180, type: 3}
-  - {fileID: 36475671171045210, guid: 66acbfec765a15e45b79322cd9cd0b04, type: 3}
-  - {fileID: 3630361807038443865, guid: dc512c2b70fe0e04dada912538d0c431, type: 3}
+  - {fileID: 11400000, guid: 3a4779932aeb4e645a3e9fc93197ddfe, type: 2}
+  - {fileID: 11400000, guid: 652def34562bd9347937921bb647a9e5, type: 2}
+  - {fileID: 11400000, guid: bbc6d76ecb21ffa4eb12b5de5820372f, type: 2}
+  - {fileID: 11400000, guid: 306c236e8d3550e4eae8075ad64f22a0, type: 2}
