@@ -1,7 +1,7 @@
 ﻿namespace Content.Scripts.Inventory
 {
-    public class MedPack : InventoryItem
+    public class Wood : InventoryItem
     {
-      
+        
     }
 }

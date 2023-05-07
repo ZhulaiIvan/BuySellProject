@@ -1,7 +1,7 @@
 ﻿namespace Content.Scripts.Inventory
 {
-    public class Sword : InventoryItem
+    public class Crystal : InventoryItem
     {
-        
+      
     }
 }

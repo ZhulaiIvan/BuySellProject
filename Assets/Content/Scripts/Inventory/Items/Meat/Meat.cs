@@ -2,7 +2,7 @@
 
 namespace Content.Scripts.Inventory
 {
-    public class Armor : InventoryItem
+    public class Meat : InventoryItem
     {
     }
 }
