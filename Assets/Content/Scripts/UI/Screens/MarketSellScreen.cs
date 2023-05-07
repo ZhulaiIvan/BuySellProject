@@ -35,7 +35,7 @@ namespace Content.Scripts.UI.Screens
         {
             InitItems();
             
-            _exitButton.onClick.AddListener(_stateContr.ReturnBack);
+            _exitButton.onClick.AddListener(() => _stateContr.ChangeState(AppStates.Play));
         }
 
         private void InitItems()

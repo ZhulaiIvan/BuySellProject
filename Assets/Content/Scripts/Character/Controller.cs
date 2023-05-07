@@ -1,6 +1,8 @@
-﻿using Content.Settings;
+﻿using Content.Scripts.States;
+using Content.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 using Input = Content.Settings.Input;
 
 namespace Content.Scripts.Character
@@ -42,7 +44,14 @@ namespace Content.Scripts.Character
         private Camera _mainCamera;
 
         private bool _hasAnimator;
+        private AppStateContr _stateContr;
 
+
+        [Inject]
+        public void Construct(AppStateContr stateContr)
+        {
+            _stateContr = stateContr;
+        }
 
         private void Awake()
         {
@@ -68,6 +77,9 @@ namespace Content.Scripts.Character
 
         private void Update()
         {
+            if (_stateContr.State.Value != (byte)AppStates.Play)
+                return;
+            
             Move();
         }
 
