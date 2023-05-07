@@ -59,6 +59,8 @@ namespace Content.Scripts.UI.Screens
                     
                     _characterModel.Money.Value -= inventoryItem.Config.Price;
                     _characterModel.Inventory.AddItem(inventoryItem);
+
+                    _manager.Play(MusicType.Purchase);
                     
                     UpdateUI();
                 });
@@ -88,6 +90,7 @@ namespace Content.Scripts.UI.Screens
 
     public abstract class MarketScreen : MenuScreen
     {
+        [SerializeField] protected AudioManager _manager;
         public abstract void InitUI();
     }
 }

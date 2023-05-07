@@ -53,7 +53,9 @@ namespace Content.Scripts.UI.Screens
                 {
                     _characterModel.Money.Value += item.Config.Price;
                     _characterModel.Inventory.DeleteItem(item);
-
+                    
+                    _manager.Play(MusicType.Purchase);
+                    
                     UpdateUI();
                 });
 

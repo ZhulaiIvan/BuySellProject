@@ -1,4 +1,5 @@
 ﻿using Content.Scripts.States;
+using Content.Scripts.UI.Screens;
 using Content.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,6 +25,8 @@ namespace Content.Scripts.Character
 
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+
+        [SerializeField] private AudioManager _manager;
 
         private float _speed;
         private float _animationBlend;
@@ -132,26 +135,13 @@ namespace Content.Scripts.Character
 
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-            transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
+            Vector3 motion = targetDirection.normalized * (_speed * Time.deltaTime) +
+                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
+            _controller.Move(motion);
 
             if (_hasAnimator)
-                _animator.SetFloat(_animIDMove, _animationBlend);
-        }
-
-        private void OnFootstep(AnimationEvent animationEvent)
-        {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                if (FootstepAudioClips.Length > 0)
-                {
-                    int index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center),
-                        FootstepAudioVolume);
-                }
+                _animator.SetFloat(_animIDMove, _animationBlend);
             }
         }
     }

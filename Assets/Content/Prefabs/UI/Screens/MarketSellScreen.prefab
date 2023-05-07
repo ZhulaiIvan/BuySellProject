@@ -635,6 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _screen: {fileID: 6448209423642367613}
+  _manager: {fileID: 0}
   _buttonPrefab: {fileID: 1859373903611221430, guid: c730796986d0a1e469904a3f3993f473, type: 3}
   _content: {fileID: 19217668475566070}
   _exitButton: {fileID: 5358281263221017866}

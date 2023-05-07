@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2406514379081972462
 RectTransform:
   m_ObjectHideFlags: 0
@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _screen: {fileID: 2406514379081972461}
+  _manager: {fileID: 0}
   _buttonPrefab: {fileID: 1859373903611221430, guid: c730796986d0a1e469904a3f3993f473, type: 3}
   _content: {fileID: 8673169835262139238}
   _config: {fileID: 11400000, guid: 6ab7261a532c8224db7feba39a0ee18f, type: 2}

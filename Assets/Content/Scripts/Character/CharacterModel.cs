@@ -1,6 +1,5 @@
 ﻿using Content.Scripts.Data;
 using Content.Scripts.Inventory;
-using UnityEngine;
 
 namespace Content.Scripts.Character
 {
@@ -17,7 +16,6 @@ namespace Content.Scripts.Character
             _money = new (1000);
 
             _inventory = inventory;
-            Debug.Log($"{_inventory}");
         }
     }
 }
